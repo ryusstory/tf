@@ -3,27 +3,16 @@
 # You must provide a value for each of these parameters.
 # ---------------------------------------------------------------------------------------------------------------------
 
-variable "db_username" {
-  description = "The username for the database"
-  type        = string
-  sensitive   = true
-  default     = "abcd"
+data "aws_ssm_parameter" "db_username" {
+  name = "/tf/week3/db/username"
 }
 
-variable "db_password" {
-  description = "The password for the database"
-  type        = string
-  sensitive   = true
-  default     = "abcdefgasdoifjas1aA!"
+data "aws_ssm_parameter" "db_password" {
+  name = "/tf/week3/db/password"
 }
 
-# ---------------------------------------------------------------------------------------------------------------------
-# OPTIONAL PARAMETERS
-# These parameters have reasonable defaults.
-# ---------------------------------------------------------------------------------------------------------------------
-
-variable "db_name" {
-  description = "The name to use for the database"
-  type        = string
-  default     = "tstudydb"
+locals {
+  db_username = data.aws_ssm_parameter.db_username
+  db_password = data.aws_ssm_parameter.db_password
+  db_name = "tstudydb"
 }
